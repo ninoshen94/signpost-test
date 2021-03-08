@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+  <body>
+    <%- include('../partials/nav') %>
+    <main>
+      <banner>
+        <h1><span id="test-name">MBTI</span> - test</h1>
+      </banner>
+      <section class="question-container">
+        <div class="instruction">
+          <p>Before the test:</p>
+          <ol>
+            <li>This test should not be used for medical evaluation.</li>
+            <li>There are no right or best answers to any of these questions.</li>
+            <li>Do not over-analyze any questions, just choose the question that first come to your mind.</li>
+            <li>Questions are about what you are, but not the way you’d like to be seen by others. </li>
+          </ol>
+        </div>
+        <div class="ques dark">
+          <p>Q1. At a party, do you:</p>
+          <ul>
+            <li>
+              <input type="radio" id="1a" name="q1">
+              <label for="1a">A. Interact with many, include strangers.</label>
+            </li>
+            <li>
+              <input type="radio" id="1b" name="q1">
+              <label for="1b">B. Bewteen A and B.</label>
+            </li>
+            <li>
+              <input type="radio" id="1c" name="q1">
+              <label for="1c">C. Interact with a few, known to you.</label>
+            </li>
+          </ul>
+        </div>
+        <div class="ques">
+          <p>Q2. Are you more:</p>
+          <ul>
+            <li>
+              <input type="radio" id="2a" name="q2">
+              <label for="1a">A. Realistic than speculative.</label>
+            </li>
+            <li>
+              <input type="radio" id="2b" name="q2">
+              <label for="1b">B. Bewteen A and B.</label>
+            </li>
+            <li>
+              <input type="radio" id="2c" name="q2">
+              <label for="1c">C. Speculative than realistic.</label>
+            </li>
+          </ul>
+        </div>
+        <div class="center">
+          <button class="submit">Submit</button>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/footer') %>
+  </body>
+  <script src="/js/main.js"></script>
+</html>

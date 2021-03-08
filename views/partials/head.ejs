@@ -1,0 +1,7 @@
+<head>
+  <meta charset="utf-8">
+  <title>Signpost Test - <%= name %></title>
+  <% Object.keys(css).forEach(function (id) { %>
+    <link rel="stylesheet" href="<%= /css/ + css[id] %>">
+  <% }) %>
+</head>

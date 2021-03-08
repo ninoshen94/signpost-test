@@ -1,0 +1,58 @@
+@import "_varilib";
+@font-face{
+  font-family: "Arial Round";
+  src: url(../font/arlrdbd.ttf) format('truetype');
+}
+
+main{
+  font-family: $Article_font;
+  banner{
+    display: block;
+    height: 240px;
+    width: 100%;
+    background: url(/image/banner-test.png) no-repeat;
+    background-size: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .submit{
+    color: $color-bg;
+    font-size: 20px;
+    padding: 10px 20px;
+    margin-top: 20px;
+  }
+  .question-container{
+    margin-top: -80px;
+    padding: 0 100px;
+    font-size: 20px;
+    color: #474747;
+    li{
+      margin-top: 10px;
+    }
+    .dark{
+      background-color: #af90d1;
+      color: $color-bg;
+      border-radius: $radius;
+    }
+    .instruction, .ques{
+      padding: 10px 40px;
+    }
+    .ques{
+      li{
+        list-style-type: none;
+      }
+    }
+  }
+}
+
+
+
+h1{
+  padding-bottom: 100px;
+  margin-left: 60px;
+  color: #474747;
+}
+
+.center{
+  text-align: center;
+}

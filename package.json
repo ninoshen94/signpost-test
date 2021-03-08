@@ -1,0 +1,25 @@
+{
+  "name": "signpost-test",
+  "version": "1.0.0",
+  "description": "a tested project",
+  "main": "index.js",
+  "scripts": {
+    "sass:watch": "node-sass origin/ --watch --output=public/css/ --output-style=compressed --source-map=true",
+    "sass:transfer": "node-sass origin/ --output=compiled/ --output-style=compressed --source-map=true"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ninoshen94/MI-449-js-serving-content-with-express.git"
+  },
+  "author": "Ruoyu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ninoshen94/MI-449-js-serving-content-with-express/issues"
+  },
+  "homepage": "https://github.com/ninoshen94/MI-449-js-serving-content-with-express#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  }
+}

@@ -1,0 +1,58 @@
+@import "_varilib";
+@font-face{
+  font-family: "Arial Round";
+  src: url(../font/arlrdbd.ttf) format('truetype');
+}
+
+main{
+  margin: 30px 80px;
+}
+.card-container{
+  justify-content:space-between !important;
+  flex-wrap: wrap;
+}
+.card{
+  width: 250px !important;
+  min-width: 250px;
+  height: 350px;
+  margin: 30px 20px 0 0 !important;
+  h2{
+    font-size: 20px !important;
+    text-align: left !important;
+  }
+  p{
+    font-size: 12px !important;
+    text-align: left !important;
+    line-height: 120%;
+    margin: 5px 0;
+  }
+  .card-info{
+    display: flex;
+    align-content: center;
+    figure{
+      margin: 20px !important;
+      img{
+        height: 60px !important;
+      }
+    }
+    
+    p{
+      padding: 0 !important;
+    }
+  }
+  .description{
+    height: 180px;
+    overflow: hidden;
+  }
+  .test-button{
+    height: 40px;
+    color: $color-bg;
+    font-weight: bold;
+    font-family: $main_font;
+  }
+}
+h1{
+  text-align: left;
+  font-size: 30px;
+}
+

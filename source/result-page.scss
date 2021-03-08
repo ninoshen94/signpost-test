@@ -1,0 +1,31 @@
+@import "_varilib";
+@font-face{
+  font-family: "Arial Round";
+  src: url(../font/arlrdbd.ttf) format('truetype');
+}
+
+main{
+  font-family: $Article_font;
+  article{
+    text-align: justify;
+    padding: 0 50px;
+  }
+  banner{
+    color: #474747;
+    display: block;
+    height: 240px;
+    
+    padding: 40px 0 0 50px;
+    background: url(/image/banner-result.png) no-repeat;
+    background-size: 100%;
+    .classification{
+      font-size: 60px;
+      margin: 0;
+    }
+  }
+}
+
+h1{
+  font-size: 25px;
+  margin: 0;
+}
