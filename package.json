@@ -4,9 +4,9 @@
   "description": "a tested project",
   "main": "index.js",
   "scripts": {
-    "sass:watch": "node-sass origin/ --watch --output=public/css/ --output-style=compressed --source-map=true",
-    "sass:transfer": "node-sass origin/ --output=compiled/ --output-style=compressed --source-map=true"
-
+    "sass:watch": "node-sass source/ --watch --output=public/css/ --output-style=compressed --source-map=true",
+    "sass:transfer": "node-sass origin/ --output=compiled/ --output-style=compressed --source-map=true",
+    "server": "cross-env DATABASE_URL='postgres://ajwixgrthbnojz:e768e252af43d06cdb5cd44be427dc15f55e6e85efac29117707a2c6bb0d86f3@ec2-54-198-252-9.compute-1.amazonaws.com:5432/dpa5a2fruvkbn' nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,13 @@
   "homepage": "https://github.com/ninoshen94/MI-449-js-serving-content-with-express#readme",
   "dependencies": {
     "ejs": "^3.1.6",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "node-xlsx": "^0.16.1",
+    "pg": "^8.5.1",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.7"
   }
 }

@@ -5,7 +5,7 @@
     <%- include('../partials/nav') %>
     <main>
       <banner>
-        <h1><span id="test-name">MBTI</span> - test</h1>
+        <h1><%= test %> - test</h1>
       </banner>
       <section class="question-container">
         <div class="instruction">
@@ -17,46 +17,27 @@
             <li>Questions are about what you are, but not the way you’d like to be seen by others. </li>
           </ol>
         </div>
-        <div class="ques dark">
-          <p>Q1. At a party, do you:</p>
-          <ul>
-            <li>
-              <input type="radio" id="1a" name="q1">
-              <label for="1a">A. Interact with many, include strangers.</label>
-            </li>
-            <li>
-              <input type="radio" id="1b" name="q1">
-              <label for="1b">B. Bewteen A and B.</label>
-            </li>
-            <li>
-              <input type="radio" id="1c" name="q1">
-              <label for="1c">C. Interact with a few, known to you.</label>
-            </li>
-          </ul>
-        </div>
-        <div class="ques">
-          <p>Q2. Are you more:</p>
-          <ul>
-            <li>
-              <input type="radio" id="2a" name="q2">
-              <label for="1a">A. Realistic than speculative.</label>
-            </li>
-            <li>
-              <input type="radio" id="2b" name="q2">
-              <label for="1b">B. Bewteen A and B.</label>
-            </li>
-            <li>
-              <input type="radio" id="2c" name="q2">
-              <label for="1c">C. Speculative than realistic.</label>
-            </li>
-          </ul>
-        </div>
+        <% for (let i = 0; i < data.length; i++) { %>
+          <div class="ques<% if (i % 2 === 0) {%><%= ' dark' %><% } %>">
+            <p>Q<%= i + 1 %>. <%= data[i].questions %></p>
+            <ul>
+              <% for (let j = 0; j < data[i].options.length; j++) { %>
+              <li>
+                <input type="radio" id="<%= i + '-'+ j %>" name="<%= i %>" value="<%= data[i].options[j].comment %>">
+                <label for="<%= i +'-'+ j %>"><%= data[i].options[j].content %></label>
+              </li>
+              <% } %>
+            </ul>
+          </div>
+        <% } %>
         <div class="center">
-          <button class="submit">Submit</button>
+          <div class="error-message" id="error"><%= test %></div>
+          <button class="submit" id="submit">Submit</button>
         </div>
       </section>
     </main>
     <%- include('../partials/footer') %>
   </body>
   <script src="/js/main.js"></script>
+  <script src="/js/test-page.js"></script>
 </html>
