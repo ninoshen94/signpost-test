@@ -1,4 +1,5 @@
 node_modules/
+supports/
 
 *.log*
 *.DS_Store

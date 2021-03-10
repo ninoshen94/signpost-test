@@ -11,6 +11,7 @@ const pool = new Pool({
 const app = express()
 const port = process.env.PORT || 8080
 const css = []
+const DEFAULT_TEST_IMAGE = 'icon1-2.png'
 
 css.push('style.css')
 
@@ -27,7 +28,6 @@ app.get('/', function (request, response) {
 })
 
 app.get('/interesting-tests', async function (request, response) {
-  const DEFAULT_TEST_IMAGE = 'icon1-2.png'
   const client = await pool.connect()
   const data = await client.query('SELECT * FROM TESTS WHERE category = 0')
   const tests = data.rows
@@ -43,6 +43,7 @@ app.get('/interesting-tests', async function (request, response) {
     tests: tests
   })
   css.splice(css.length - 1, 1)
+  client.release()
 })
 
 app.get('/result-page', async function (request, response) {
@@ -75,7 +76,9 @@ app.get('/result-page', async function (request, response) {
     })
     css.splice(css.length - 1, 1)
   } finally {
-    client.release()
+    if (client) {
+      client.release()
+    }
   }
 })
 
@@ -119,6 +122,43 @@ app.get('/test-page', async function (request, response) {
       client.release()
     }
   }
+})
+
+app.get('/random-test', async function (request, response) {
+  const client = await pool.connect()
+  const data = await client.query('SELECT name FROM TESTS')
+  const count = data.rows.length
+  const randomIndex = Math.floor(count * Math.random())
+  const testName = data.rows[randomIndex].name
+  response.redirect('/test-page?test=' + testName)
+  client.release()
+})
+
+// This is temporary search page. In the future it will be combined with interesting-tests and scientific-tests.
+app.get('/search-result', async function (request, response) {
+  const toSearch = request.query.search
+  if (!toSearch || Object.keys(request.query).length !== 1) {
+    response.status(400).json({
+      error: 'bad query'
+    })
+    return
+  }
+  const client = await pool.connect()
+  const data = await client.query(`SELECT * FROM tests WHERE name LIKE '%${toSearch}%'`)
+  const tests = data.rows
+  Object.keys(tests).forEach(function (id) {
+    if (!tests[id].image) {
+      tests[id].image = DEFAULT_TEST_IMAGE
+    }
+  })
+  css.push('interesting-tests.css')
+  response.render('pages/search-result', {
+    css: css,
+    name: 'search-result',
+    tests: tests
+  })
+  css.splice(css.length - 1, 1)
+  client.release()
 })
 
 app.post('/getResult/:test', async function (request, response) {
