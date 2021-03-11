@@ -1,7 +1,9 @@
 const express = require('express')
 const { Pool } = require('pg')
 const bodyParser = require('body-parser')
+const favicon = require('serve-favicon')
 const resultHandler = require('./resultHandler.js')
+const path = require('path')
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -16,6 +18,7 @@ const DEFAULT_TEST_IMAGE = 'icon1-2.png'
 css.push('style.css')
 
 app.use(express.static('public'))
+app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')))
 app.use(bodyParser.json())
 
 app.set('view engine', 'ejs')
