@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
 const resultHandler = require('./resultHandler.js')
 const path = require('path')
+let clients = 0
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -58,6 +59,7 @@ app.get('/result-page', async function (request, response) {
   }
   let client
   try {
+    clients++
     client = await pool.connect()
     const testId = await client.query('SELECT id FROM TESTS WHERE name = $1', [test])
     if (testId.rowCount === 0) {
@@ -79,6 +81,7 @@ app.get('/result-page', async function (request, response) {
     })
     css.splice(css.length - 1, 1)
   } finally {
+    clients--
     if (client) {
       client.release()
     }
@@ -96,7 +99,8 @@ app.get('/test-page', async function (request, response) {
 
   let client
   try {
-    const client = await pool.connect()
+    clients++
+    client = await pool.connect()
     const testId = await (await client.query('SELECT id FROM TESTS WHERE name = $1', [test])).rows[0].id
 
     if (testId.rowCount === 0) {
@@ -121,6 +125,7 @@ app.get('/test-page', async function (request, response) {
     })
     css.splice(css.length - 1, 1)
   } finally {
+    clients--
     if (client) {
       client.release()
     }
@@ -128,13 +133,19 @@ app.get('/test-page', async function (request, response) {
 })
 
 app.get('/random-test', async function (request, response) {
-  const client = await pool.connect()
-  const data = await client.query('SELECT name FROM TESTS')
-  const count = data.rows.length
-  const randomIndex = Math.floor(count * Math.random())
-  const testName = data.rows[randomIndex].name
-  response.redirect('/test-page?test=' + testName)
-  client.release()
+  if (clients < 9) {
+    clients++
+    const client = await pool.connect()
+    const data = await client.query('SELECT name FROM TESTS')
+    const count = data.rows.length
+    const randomIndex = Math.floor(count * Math.random())
+    const testName = data.rows[randomIndex].name
+    response.redirect('/test-page?test=' + testName)
+    client.release()
+    clients--
+  } else {
+    response.status(502).end('Requesting too often.')
+  }
 })
 
 // This is temporary search page. In the future it will be combined with interesting-tests and scientific-tests.
@@ -146,6 +157,7 @@ app.get('/search-result', async function (request, response) {
     })
     return
   }
+  clients++
   const client = await pool.connect()
   const data = await client.query(`SELECT * FROM tests WHERE name LIKE '%${toSearch}%'`)
   const tests = data.rows
@@ -162,6 +174,7 @@ app.get('/search-result', async function (request, response) {
   })
   css.splice(css.length - 1, 1)
   client.release()
+  clients--
 })
 
 app.post('/getResult/:test', async function (request, response) {

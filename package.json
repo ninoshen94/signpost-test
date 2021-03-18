@@ -1,7 +1,7 @@
 {
   "name": "signpost-test",
   "version": "1.0.0",
-  "description": "a tested project",
+  "description": "A web-browser based application program",
   "main": "index.js",
   "scripts": {
     "sass:watch": "node-sass source/ --watch --output=public/css/ --output-style=compressed --source-map=true",
