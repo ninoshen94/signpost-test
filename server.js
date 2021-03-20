@@ -41,13 +41,60 @@ app.get('/interesting-tests', async function (request, response) {
     }
   })
   css.push('interesting-tests.css')
-  response.render('pages/interesting-tests', {
+  response.render('pages/tests-list', {
     css: css,
-    name: 'interesting-tests',
+    name: 'Interesting-tests',
     tests: tests
   })
   css.splice(css.length - 1, 1)
   client.release()
+})
+
+app.get('/scientific-tests', async function (request, response) {
+  const client = await pool.connect()
+  const data = await client.query('SELECT * FROM TESTS WHERE category = 1')
+  const tests = data.rows
+  Object.keys(tests).forEach(function (id) {
+    if (!tests[id].image) {
+      tests[id].image = DEFAULT_TEST_IMAGE
+    }
+  })
+  css.push('interesting-tests.css')
+  response.render('pages/tests-list', {
+    css: css,
+    name: 'Scientific-tests',
+    tests: tests
+  })
+  css.splice(css.length - 1, 1)
+  client.release()
+})
+
+app.get('/search-result', async function (request, response) {
+  const toSearch = request.query.search
+  if (!toSearch || Object.keys(request.query).length !== 1) {
+    response.status(400).json({
+      error: 'bad query'
+    })
+    return
+  }
+  clients++
+  const client = await pool.connect()
+  const data = await client.query(`SELECT * FROM tests WHERE LOWER(name) LIKE '%${toSearch.toLowerCase()}%' OR LOWER(description) LIKE '%${toSearch.toLowerCase()}%'`)
+  const tests = data.rows
+  Object.keys(tests).forEach(function (id) {
+    if (!tests[id].image) {
+      tests[id].image = DEFAULT_TEST_IMAGE
+    }
+  })
+  css.push('interesting-tests.css')
+  response.render('pages/tests-list', {
+    css: css,
+    name: 'Search-result',
+    tests: tests
+  })
+  css.splice(css.length - 1, 1)
+  client.release()
+  clients--
 })
 
 app.get('/result-page', async function (request, response) {
@@ -146,35 +193,6 @@ app.get('/random-test', async function (request, response) {
   } else {
     response.status(502).end('Requesting too often.')
   }
-})
-
-// This is temporary search page. In the future it will be combined with interesting-tests and scientific-tests.
-app.get('/search-result', async function (request, response) {
-  const toSearch = request.query.search
-  if (!toSearch || Object.keys(request.query).length !== 1) {
-    response.status(400).json({
-      error: 'bad query'
-    })
-    return
-  }
-  clients++
-  const client = await pool.connect()
-  const data = await client.query(`SELECT * FROM tests WHERE name LIKE '%${toSearch}%'`)
-  const tests = data.rows
-  Object.keys(tests).forEach(function (id) {
-    if (!tests[id].image) {
-      tests[id].image = DEFAULT_TEST_IMAGE
-    }
-  })
-  css.push('interesting-tests.css')
-  response.render('pages/search-result', {
-    css: css,
-    name: 'search-result',
-    tests: tests
-  })
-  css.splice(css.length - 1, 1)
-  client.release()
-  clients--
 })
 
 app.post('/getResult/:test', async function (request, response) {

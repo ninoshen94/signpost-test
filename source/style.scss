@@ -57,10 +57,27 @@ nav{
   display: flex;
   justify-content: space-between;
   color: $color-bg;
-  background-color: hsl(272, 58%, 27%);
+  background-color: #481d6d;
   height: 80px;
   .nav-item{
+    user-select: none;
     margin-left: 30px;
+    .login{
+      height: 40px;
+      width: 40px;
+      padding: 0;
+      img{
+        height: 100%;
+        padding: 0;
+      }
+    }
+  }
+  a.nav-item{
+    padding: 27px 0;
+    &:hover{
+      border-bottom: 4px solid $color-button;
+      border-top: 4px solid hsl(272, 58%, 27%);
+    }
   }
   input{
     height: 30px;
@@ -78,14 +95,52 @@ nav{
     &.nav-big{
       padding: 0 20px;
       height: 40px;
-      margin-right: 20px;
     }
   }
   .line{
     width: 1px;
     height: 50px;
-    background-color: #969696;
+    background-color: $color-dark-line;
   }
+  .menu-slide-down{
+    img{
+      cursor: pointer;
+    }
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 20px 20px 0 20px;
+    width: 40px;
+    overflow: hidden;
+    height: 40px;
+    z-index: 10;
+    &:hover{
+      margin: 20px 20px 0 -60px;
+      width: 120px;
+      height: fit-content;
+    }
+    .hidden-menu-container{
+      margin-top: 10px;
+      border-radius: $radius;
+      background-color: #efefef;
+      padding: 0 10px;
+      .hidden-menu{
+        color: #474747;
+        font-size: 12px;
+        text-align: center;
+        padding: 10px 0;
+        margin: 0;
+        border-top: 1px solid $color-dark-line;
+      }
+      .first{
+        border: none;
+      }
+    }
+  }
+}
+
+img{
+  user-select: none;
 }
 
 main{
@@ -144,7 +199,7 @@ footer{
     display: flex;
     figure.logo{
       height: $navs-height;
-      width: $navs-width
+      width: $navs-width;
     }
     .icons{
       display: flex;
@@ -175,7 +230,19 @@ h1{
   align-items: center;
 }
 
+.center-start{
+  display: flex;
+}
+
 .invisible{
   visibility: hidden !important;
 }
 
+.clickable{
+  position: absolute;
+  height: 104px;
+  width: $navs-width;
+  min-width: 130px;
+  background-color: transparent;
+  z-index: 1;
+}

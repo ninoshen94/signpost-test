@@ -6,7 +6,7 @@
     <main>
       <article>
         <header>
-          <h1>Search Result:</h1>
+          <h1><%= name.replace('-', ' ') %>:</h1>
         </header>
         <% if(Object.keys(tests).length != 0) { %>
           <section class="card-container">
@@ -18,16 +18,16 @@
                       <img src="/image/<%= tests[id].image %>" alt="<%= tests[id].name %> icon">
                     </figure>
                     <div>
-                      <h2><%= tests[id].name %></h2>
+                      <h2 class="search-period"><%= tests[id].name %></h2>
                       <p>Estimate time: <%= tests[id].time %> min</p>
                       <p>Questions: <%= tests[id].questions %></p>
                     </div>
                   </div>
-                  <div class="description">
+                  <div class="description search-period">
                     <p><%= tests[id].description %></p>
                   </div>
                 </div>
-                <button class="test-button" value="<%= tests[id].name %>">Enter</button>
+                <button class="test-button loading" value="<%= tests[id].name %>">Enter</button>
               </div>
             <% }) %>
           </section>
@@ -38,6 +38,6 @@
     </main>
     <%- include('../partials/footer') %>
   </body>
-  <script src="/js/main.js"></script>
-  <script src="/js/interesting-tests.js"></script>
+  <script type="module" src="/js/main.js"></script>
+  <script type="module" src="/js/tests-list.js"></script>
 </html>

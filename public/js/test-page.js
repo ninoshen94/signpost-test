@@ -1,3 +1,4 @@
+import { loading } from './main.js'
 const submitButton = document.getElementById('submit')
 const inputs = document.getElementsByTagName('input')
 let thisTest
@@ -95,11 +96,12 @@ const submit = function () {
   if (!checkValidation(groups[0], groups[1])) {
     return
   }
+  loading(submitButton)
   ajaxPost('/getResult/' + thisTest, groups[0])
 }
 
 submitButton.addEventListener('click', submit)
 
-Object.keys(inputs).forEach(function (input) {
-  inputs[input].addEventListener('change', removeErrorMessage)
+Object.keys(inputs).forEach(function (id) {
+  inputs[id].addEventListener('change', removeErrorMessage)
 })
