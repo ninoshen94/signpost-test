@@ -3,7 +3,15 @@
   <%- include('../partials/head') %>
   <body>
     <%- include('../partials/nav') %>
+    <div class="timer-container">
+      <div class="timer">
+        <p>Estimate time: <span id="estimate-time"><%= time %></span></p>
+        <p>Time used: <span id="timer">0:00:00</span></p>
+        <div class="progress"><p>Progress: <span id="progress">0.0%</span></p></div>
+      </div>
+      </div>
     <main>
+      <a name="error"></a>
       <banner>
         <h1><%= test %> - test</h1>
       </banner>
@@ -15,24 +23,43 @@
             <li>There are no right or best answers to any of these questions.</li>
             <li>Do not over-analyze any questions, just choose the question that first come to your mind.</li>
             <li>Questions are about what you are, but not the way you’d like to be seen by others. </li>
+            <li>Don't have to (but highly recommended) strictly finished the test within the recommended time.</li>
           </ol>
-        </div>
-        <% for (let i = 0; i < data.length; i++) { %>
-          <div class="ques<% if (i % 2 === 0) {%><%= ' dark' %><% } %>">
-            <p>Q<%= i + 1 %>. <%= data[i].questions %></p>
-            <ul>
-              <% for (let j = 0; j < data[i].options.length; j++) { %>
-              <li>
-                <input type="radio" id="<%= i + '-'+ j %>" name="<%= i %>" value="<%= data[i].options[j].comment %>">
-                <label for="<%= i +'-'+ j %>"><%= data[i].options[j].content %></label>
-              </li>
-              <% } %>
-            </ul>
+          <a name="begin"></a>
+          <p>Tips:</p>
+          <ol>
+            <li>The indicator at the right of each question indicates if the question has been finished. Gray - not finished yet; Orange - finished.</li>
+            <li>Hover your mouse on the penal at right top will make it more clear for seconds.</li>
+            <li>The panel always show your progress as a bar and a percentage when you hover.</li>
+          </ol>
+          <div class="center">
+            <button class="submit" id="ready">I'm Ready!</button>
           </div>
-        <% } %>
-        <div class="center">
-          <div class="error-message" id="error"><%= test %></div>
-          <button class="submit loading" id="submit">Submit</button>
+        </div>
+        <div class="error-message" id="error"><%= test %></div>
+        <div id="question-area" class="display-none">
+          <% for (let i = 0; i < data.length; i++) { %>
+            <div class="ques<% if (i % 2 === 0) {%><%= ' dark' %><% } %>">
+              <div>
+                <div>
+                  <p>Q<%= i + 1 %>. <%= data[i].questions %></p>
+                </div>
+                <ul>
+                  <% for (let j = 0; j < data[i].options.length; j++) { %>
+                  <li>
+                    <input type="radio" id="<%= i + '-'+ j %>" name="<%= i %>" value="<%= data[i].options[j].comment %>">
+                    <label for="<%= i +'-'+ j %>"><%= data[i].options[j].content %></label>
+                  </li>
+                  <% } %>
+                </ul>
+              </div>
+              <div class="indicator">
+              </div>
+            </div>
+          <% } %>
+          <div class="center">
+            <button class="submit loading" id="submit">Submit</button>
+          </div>
         </div>
       </section>
     </main>

@@ -40,7 +40,7 @@ app.get('/interesting-tests', async function (request, response) {
       tests[id].image = DEFAULT_TEST_IMAGE
     }
   })
-  css.push('interesting-tests.css')
+  css.push('tests-list.css')
   response.render('pages/tests-list', {
     css: css,
     name: 'Interesting-tests',
@@ -59,7 +59,7 @@ app.get('/scientific-tests', async function (request, response) {
       tests[id].image = DEFAULT_TEST_IMAGE
     }
   })
-  css.push('interesting-tests.css')
+  css.push('tests-list.css')
   response.render('pages/tests-list', {
     css: css,
     name: 'Scientific-tests',
@@ -86,7 +86,7 @@ app.get('/search-result', async function (request, response) {
       tests[id].image = DEFAULT_TEST_IMAGE
     }
   })
-  css.push('interesting-tests.css')
+  css.push('tests-list.css')
   response.render('pages/tests-list', {
     css: css,
     name: 'Search-result',
@@ -136,6 +136,18 @@ app.get('/result-page', async function (request, response) {
 })
 
 app.get('/test-page', async function (request, response) {
+  const handleTime = function (time) {
+    let second = time === Math.floor(time) ? 0 : Math.round((time - Math.floor(time)) * 60)
+    time = Math.floor(time)
+    second = second < 10 ? '0' + second : second
+
+    let minute = time >= 60 ? time % 60 : time
+    time -= minute
+    minute = minute < 10 ? '0' + minute : minute
+
+    const hour = time === 0 ? 0 : time / 60
+    return hour + ':' + minute + ':' + second
+  }
   const test = request.query.test
   if (Object.keys(request.query).length !== 1 || !test) {
     response.json({
@@ -148,14 +160,15 @@ app.get('/test-page', async function (request, response) {
   try {
     clients++
     client = await pool.connect()
-    const testId = await (await client.query('SELECT id FROM TESTS WHERE name = $1', [test])).rows[0].id
+    const tests = await (await client.query('SELECT * FROM TESTS WHERE name = $1', [test]))
 
-    if (testId.rowCount === 0) {
-      response.status(400).end('bad query')
+    if (tests.rowCount === 0) {
+      response.status(400).end('bad query: no such a test')
       return
     }
 
-    const questions = await (await client.query('SELECT * FROM QUESTIONS WHERE from_test = $1', [parseInt(testId)])).rows
+    const time = handleTime(tests.rows[0].time)
+    const questions = await (await client.query('SELECT * FROM QUESTIONS WHERE from_test = $1', [parseInt(tests.rows[0].id)])).rows
     const data = []
     for (const obj in questions) {
       const temp = {}
@@ -168,7 +181,8 @@ app.get('/test-page', async function (request, response) {
       css: css,
       name: 'test-page',
       data: data,
-      test: test
+      test: test,
+      time: time
     })
     css.splice(css.length - 1, 1)
   } finally {

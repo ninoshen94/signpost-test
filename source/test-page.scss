@@ -4,7 +4,18 @@
   src: url(../font/arlrdbd.ttf) format('truetype');
 }
 
+footer{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+nav{
+  position: fixed;
+}
+
 main{
+  padding-top: 80px;
   font-family: $Article_font;
   banner{
     display: block;
@@ -30,28 +41,58 @@ main{
     li{
       margin-top: 10px;
     }
-    .dark{
-      background-color: #af90d1;
-      color: $color-bg;
-      border-radius: $radius;
-    }
-    .instruction, .ques{
+    .instruction{
       padding: 10px 40px;
     }
     .ques{
+      background-color: darken($color-bg, 5%);
+      transition: all .3s ease;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      border-radius: $radius;
+      padding-left: 40px;
+      margin: 10px 0;
+      .indicator{
+        background-color: darken($color-bg, 20%);;
+        height: 100%;
+        width: 20px;
+      }
+      .selected{
+        background-color:$color-button;
+      }
+      ul{
+        padding-bottom: 20px;
+        li{
+          list-style-type: none;
+        }
+      }
+      
+    }
+    .dark{
+      background-color: #af90d1;
+      color: $color-bg;
+    }
+    .instruction{
       li{
-        list-style-type: none;
+        font-size: 16px;
       }
     }
   }
   .error-message{
     color: red;
     font-size: 14px;
-    visibility: hidden;
+    display: none;
+    margin-bottom: 20px;
   }
 }
 
-
+.display-none{
+  visibility: hidden;
+  position: absolute;
+  top: -100000px;
+  left: -100000px
+}
 
 h1{
   padding-bottom: 100px;
@@ -61,4 +102,46 @@ h1{
 
 .center{
   text-align: center;
+}
+
+.timer-container{
+  pointer-events: none;
+  position: fixed;
+  width: 100%;
+  top: 100px;
+  display: flex;
+  justify-content: flex-end;
+  .timer{
+    pointer-events: all;
+    width: fit-content;
+    background-color: $color-theme-purple-reg;
+    color: $color-bg;
+    margin-right: 30px;
+    padding: 0 20px;
+    border-radius: 15px;
+    opacity: 50%;
+    transition: all .2s linear 1s;
+    &:hover{
+      transition: all .2s linear;
+      opacity: 100%;
+      .progress{
+        height: 20px;
+        margin-bottom: 15px;
+        overflow: visible;
+      }
+    }
+    .progress{
+      transition: all .2s linear;
+      height: 2px;
+      width: 0;
+      background-color: $color-button;
+      border-radius: 4px;
+      overflow: hidden;
+      p{
+        position: relative;
+        left: 30px;
+        white-space: nowrap;
+      }
+    }
+  }
 }

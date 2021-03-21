@@ -1,8 +1,8 @@
 {
 	"version": 3,
-	"file": "interesting-tests.css",
+	"file": "tests-list.css",
 	"sources": [
-		"../../source/interesting-tests.scss",
+		"../../source/tests-list.scss",
 		"../../source/_varilib.scss"
 	],
 	"names": [],

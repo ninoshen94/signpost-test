@@ -54,6 +54,7 @@ figure.logo{
 }
 
 nav{
+  width: 100%;
   display: flex;
   justify-content: space-between;
   color: $color-bg;
@@ -146,6 +147,7 @@ img{
 main{
   margin: 0;
   min-height: 500px;
+  padding-bottom: 100px;
   img{
     width: 100%;
   }
@@ -189,13 +191,12 @@ main{
 }
 
 footer{
-  margin-top: 80px;
   img{
     width: 100%;
   }
   .footer-bottom{
     background-color: #471d6d;
-    height: $navs-height;
+    height: 10px;
     display: flex;
     figure.logo{
       height: $navs-height;
@@ -203,6 +204,7 @@ footer{
     }
     .icons{
       display: flex;
+      margin-top: -25px;
       img{
         height: 30px;
         width: auto;
@@ -214,7 +216,7 @@ footer{
     display: block;
   }
   .footer-bottom img{
-    margin-top: -45px;
+    margin-top: -80px;
   }
 }
 
